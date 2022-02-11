@@ -10,7 +10,7 @@ getAllSnacks = async () =>{
     }
 }
 
-getOneSnack = async (id) =>{
+getOneSnack = async(id)=>{
     try{
         const oneSnack = await db.one("SELECT * FROM snacks WHERE id=$1", id);
         return oneSnack;
