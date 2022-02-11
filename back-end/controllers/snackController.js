@@ -27,11 +27,15 @@ snacks.get("/:id", async (req,res) =>{
     const { id } = req.params;
     try{
         const snack = await getOneSnack(id);
-        // console.log(snack);
+        const testId = 
+        {success: true,
+        payload:
+          snack
+        };
         if(snack.id){
-            res.status(200).json(snack);
+            res.status(200).json(testId);
         } else {
-            res.status(404).json({error: "Snack not found"});
+            res.status(404).send("not found");
         }
     }catch(err){
         console.log(err);
@@ -63,20 +67,6 @@ snacks.post("/", async (req, res)=>{
     }
 })
 
-snacks.post("/", async (req, res)=>{
-    const { body } = req;
-    try{
-        const createdSnack = await createSnack(body);
-        if(createdSnack.id){
-            res.status(200).json(createdSnack);
-        } else {
-            res.status(500).json({error: "Snack creation error"});
-        }
-    } catch(err){
-        console.log(err);
-    }
-})
-
 snacks.delete("/:id",async(req,res)=>{
   const { id } = req.params;
   const deletedSnack = await deleteSnack(id);
@@ -86,19 +76,4 @@ snacks.delete("/:id",async(req,res)=>{
       res.status(404).json({error:"Snack not found"});
   }
 })
-
-snacks.post("/", async(req,res)=>{
-  const { body } = req;
-  // const { name, url, is_favorite, category } = req.body;
-  try{
-      const createdSnack = await createSnack(body);
-      if(createdSnack.id){
-          res.status(200).json(createdSnack);
-      }else{
-          res.status(500).json({error:"Snack creation error"});
-      }
-  }catch(err){
-      console.log(err);
-  }
-}) 
 module.exports = snacks;
