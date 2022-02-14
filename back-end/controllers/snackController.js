@@ -1,6 +1,7 @@
 const express = require("express");
 const snacks = express.Router();
 const { getAllSnacks, getOneSnack , deleteSnack, createSnack} = require("../queries/snacks.js");
+const confirmHealth = require("../confirmHealth.js");
 
 snacks.get("/", async (req, res) => {
   try {
@@ -33,13 +34,36 @@ snacks.get("/:id", async (req,res) =>{
 
 });
 
+function capitalization(str){
+  return str.toLowerCase().split(" ").map(el =>{
+    if(el.length > 2){
+      return el[0].toUpperCase() + el.slice(1);
+    }else{
+      return el;
+    }
+  }).join(" ");
+}
+
 snacks.post("/", async (req, res)=>{
-    const { body } = req;
+    let { body } = req;
     try{
-        const createdSnack = await createSnack(body);
+      if (!body.name ){
+        res.status(422).json({success: false, payload: "Must include name field"});
+        return;
+      }
+      if(!body.image){
+        body = {...body, image: "https://dummyimage.com/400x400/6e6c6e/e9e9f5.png&text=No+Image"}
+      }
+
+      body = {...body, name:capitalization(body.name), is_healthy: confirmHealth(body)};
+
+
+      const createdSnack = await createSnack(body);
+      const testPost = {success: true, payload: createdSnack};
+        
         if(createdSnack.id){
-            res.status(200).json(createdSnack);
-        } else {
+            res.status(200).json(testPost);
+        }else {
             res.status(500).json({error: "Snack creation error"});
         }
     } catch(err){
@@ -51,10 +75,11 @@ snacks.post("/", async (req, res)=>{
 snacks.delete("/:id",async(req,res)=>{
   const { id } = req.params;
   const deletedSnack = await deleteSnack(id);
+  const testDeleted = {success: true, payload: deletedSnack};
   if(deletedSnack.id){
-      res.status(200).json(deletedSnack);
+      res.status(200).json(testDeleted);
   }else{
-      res.status(404).json({error:"Snack not found"});
+      res.status(404).json({success: false, payload: "undefined"});
   }
 })
 
