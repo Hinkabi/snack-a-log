@@ -35,8 +35,8 @@ function ShowSnackDetails(){
           <h5>Snack name: {snack.name}</h5>
             <img src={snack.image} alt={snack.name} />
             <h6>Protein: {snack.protein}</h6>
-            <h6>Fiber:{snack.fiber}</h6>
-            <h6>Added_Sugar:{snack.added_sugar}</h6>
+            <h6>Fiber: {snack.fiber}</h6>
+            <h6>Added Sugar: {snack.added_sugar}</h6>
           </div>
             
             <div className="showNavigation">
