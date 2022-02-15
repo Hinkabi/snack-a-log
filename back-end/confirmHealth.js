@@ -1,15 +1,12 @@
 const confirmHealth = (snack) => {
-    if(typeof snack.protein !== "number" && typeof snack.fiber !== "number" && typeof snack.added_sugar !== "number"){
+    const {protein, fiber, added_sugar} = snack;
+    if(isNaN(fiber) || isNaN(protein) || isNaN(added_sugar)){
         return null;
-    }
-
-    if(snack.protein >= 5 && snack.added_sugar <5){
+    }else if((protein >= 5 || fiber >= 5) && added_sugar < 5){
         return true;
+    }else{
+        return false;
     }
-    if(snack.fiber >=5 && snack.added_sugar <5){
-        return true;
-    }
-    return false;
 };
 
-module.exports = confirmHealth;
+module.exports = confirmHealth ;

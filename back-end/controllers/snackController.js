@@ -35,16 +35,35 @@ snacks.get("/:id", async (req,res) =>{
 
 });
 
+function capitalization(str){
+  return str.toLowerCase().split(" ").map(el =>{
+    if(el.length > 2){
+      return el[0].toUpperCase() + el.slice(1);
+    }else{
+      return el;
+    }
+  }).join(" ");
+}
+
 snacks.post("/", async (req, res)=>{
-    const { body } = req;
-    body.is_healthy = confirmHealth(body)
+    let { body } = req;
     try{
-        const createdSnack = await createSnack(body);
-        const testPost = {success: true, payload: createdSnack}
-        const capitalization = {success: true, payload: createdSnack.name}
+      if (!body.name ){
+        res.status(422).json({success: false, payload: "Must include name field"});
+        return;
+      }
+      if(!body.image){
+        body = {...body, image: "https://dummyimage.com/400x400/6e6c6e/e9e9f5.png&text=No+Image"}
+      }
+
+      body = {...body, name:capitalization(body.name), is_healthy: confirmHealth(body)};
+
+
+      const createdSnack = await createSnack(body);
+      const testPost = {success: true, payload: createdSnack};
+        
         if(createdSnack.id){
             res.status(200).json(testPost);
-        
         }else {
             res.status(500).json({error: "Snack creation error"});
         }
@@ -56,11 +75,11 @@ snacks.post("/", async (req, res)=>{
 snacks.delete("/:id",async(req,res)=>{
   const { id } = req.params;
   const deletedSnack = await deleteSnack(id);
-  const testDelete = {success: true, payload: deletedSnack}
+  const testDeleted = {success: true, payload: deletedSnack};
   if(deletedSnack.id){
-      res.status(200).json(testDelete);
+      res.status(200).json(testDeleted);
   }else{
-      res.status(404).json({success:false, payload: "undefined" });
+      res.status(404).json({success: false, payload: "undefined"});
   }
 })
 
