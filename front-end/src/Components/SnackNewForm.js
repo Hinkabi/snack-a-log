@@ -18,10 +18,6 @@ function SnackNewForm(){
     const handleTextChange = (event) => {
         setSnack({ ...snack, [event.target.id]: event.target.value });
     };
-    
-    // const handleCheckboxChange = () => {
-    //     setSnack({ ...snack, is_favorite: !song.is_favorite});
-    // };
 
     const handleSubmit = (event) => {
         event.preventDefault();

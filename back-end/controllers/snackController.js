@@ -25,7 +25,6 @@ snacks.get("/:id", async (req,res) =>{
         const testId = {success: true, payload: snack};
         if(snack.id){
             res.status(200).json(testId);
-            console.log(testId)
         } else {
             res.status(404).json({success:false, payload: "not found"});
         }

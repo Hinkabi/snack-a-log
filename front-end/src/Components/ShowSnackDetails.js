@@ -26,12 +26,12 @@ function ShowSnackDetails(){
           })
       };
     return(
-        <article className = "New Snack">
+        <article className = "">
           <aside>
             <h4>the snack health</h4>
             <HeartHealth snackHealth={snack.is_healthy}/>
           </aside>
-          <div className="Snack">
+          <div className = "Snack">
           <h5>Snack name: {snack.name}</h5>
             <img src={snack.image} alt={snack.name} />
             <h6>Protein: {snack.protein}</h6>

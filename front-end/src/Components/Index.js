@@ -20,9 +20,9 @@ function Snacks(){
     return(
         <div className="Snacks">
             <article>
-            {snacks.map((snack) => {
-            return <Snack key={snack.id} snack={snack}/>;
-            })}
+                {snacks.map((snack) => {
+                return <Snack key={snack.id} snack={snack}/>;
+                })}
             </article>
         </div>
     )

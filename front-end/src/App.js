@@ -5,7 +5,7 @@ import Index from "./Components/Index.js";
 import SnackNewForm from "./Components/SnackNewForm.js"
 import ShowSnackDetails from "./Components/ShowSnackDetails.js";
 import SnackEditForm from "./Components/SnackEditForm.js";
-import FourOFour from "./FourOFour.js";
+// import FourOFour from "./FourOFour.js";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
             <Route path="/snacks/new" element={<SnackNewForm/>}/>
             <Route path="/snacks/:id" element = {<ShowSnackDetails/>}/>
             <Route path="/snacks/:id/edit" element={<SnackEditForm/>}/>
-            <Route path="*" element={<FourOFour/>}/>
+            {/* <Route path="*" element={<FourOFour/>}/> */}
           </Routes>
           </main>
       </Router>
