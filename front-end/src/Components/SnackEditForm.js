@@ -9,9 +9,9 @@ function SnackEditForm() {
     const [snack, setSnack] = useState({
         name: "",
         image: "",
-        fiber: "",
-        protein: "",
-        added_sugar: "",
+        fiber: 0,
+        protein: 0,
+        added_sugar: 0,
     });
   
     const navigate = useNavigate();
@@ -27,17 +27,17 @@ function SnackEditForm() {
     useEffect(() => {
       axios.get(`${process.env.REACT_APP_API_URL}/snacks/${id}`)
         .then((res)=>{
-          setSnack(res.data);
+          setSnack(res.data.payload);
         }).catch((err)=>{
           navigate("/not-found");
         })
-    }, []);
+    }, [id]);
   
     const handleSubmit = (event) => {
       event.preventDefault();
       axios.put(`${process.env.REACT_APP_API_URL}/snacks/${id}`, snack)
         .then((res)=>{
-          navigate(`/snacks/${id}`);
+          navigate(`/snacks`);
         }).catch((err)=>{
           console.log(err)
         })
@@ -45,7 +45,7 @@ function SnackEditForm() {
     return (
         <div className="EditForm">
         <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Snack Name</label>
+            <label htmlFor="name">Name</label>
             <input required
             id="name"
             value={snack.name}
@@ -54,7 +54,7 @@ function SnackEditForm() {
             placeholder="Name of Snack"
             />
             <label htmlFor="image">Image:</label>
-            <input required
+            <input 
             id="image"
             type="text"
             name="image"
@@ -65,7 +65,7 @@ function SnackEditForm() {
             <label htmlFor="fiber">Fiber:</label>
             <input
             id="fiber"
-            type="text"
+            type="number"
             value={snack.fiber}
             placeholder="Fiber"
             onChange={handleTextChange}
@@ -73,18 +73,18 @@ function SnackEditForm() {
             <label htmlFor="protein">Protein:</label>
             <input
             id="protein"
-            type="textbox"
+            type="number"
             onChange={handleTextChange}
             value={snack.protein}
             placeholder="Protein"
             />
-            <label htmlFor="added_sugar">Added_Sugar:</label>
+            <label htmlFor="added_sugar">Added Sugar:</label>
             <input
             id="added_sugar"
             value={snack.added_sugar}
-            type="text"
+            type="number"
             onChange={handleTextChange}
-            placeholder="Added_Sugar"
+            placeholder="Added Sugar"
             />
             <br />
             <input type="submit" />

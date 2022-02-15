@@ -11,7 +11,7 @@ function Snacks(){
         useEffect(() => {
         axios.get(API + "/snacks")
         .then((res)=>{
-            setSnacks(res.data);
+            setSnacks(res.data.payload);
         }).catch((err)=>{
             console.log(err);
         })
@@ -20,7 +20,7 @@ function Snacks(){
     return(
         <div>
             {snacks.map((snack) => {
-            return <Snack key={snack.id} snack={snack.name} snack={snack.image}/>;
+            return <Snack key={snack.id} snack={snack}/>;
             })}
         </div>
     )

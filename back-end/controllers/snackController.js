@@ -1,6 +1,6 @@
 const express = require("express");
 const snacks = express.Router();
-const { getAllSnacks, getOneSnack , deleteSnack, createSnack} = require("../queries/snacks.js");
+const { getAllSnacks, getOneSnack , deleteSnack, createSnack, updateSnack} = require("../queries/snacks.js");
 const confirmHealth = require("../confirmHealth.js");
 
 snacks.get("/", async (req, res) => {
@@ -80,6 +80,18 @@ snacks.delete("/:id",async(req,res)=>{
       res.status(200).json(testDeleted);
   }else{
       res.status(404).json({success: false, payload: "undefined"});
+  }
+});
+
+snacks.put("/:id", async(req,res)=>{
+  const { id } = req.params;
+  let { body } = req;
+  body = {...body, name:capitalization(body.name), is_healthy: confirmHealth(body)}
+  const updatedSnack = await updateSnack(id, body);
+  if(updatedSnack.id){
+    res.status(200).json({success: true, payload: updatedSnack})
+  } else{
+    res.status(404).json({success: false, payload: "error"})
   }
 })
 

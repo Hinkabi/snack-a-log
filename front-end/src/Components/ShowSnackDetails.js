@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import HeartHealth from "./HeartHealth";
 
 function ShowSnackDetails(){
-  const [snack, setSnack] = useState([]);
+  const [snack, setSnack] = useState({});
   let { id } = useParams();
   let navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/snacks/${id}`)
       .then((res)=>{
-        setSnack(res.data);
+        setSnack(res.data.payload);
       }).catch(()=>{
         navigate("/not-found");
       });
@@ -26,17 +27,22 @@ function ShowSnackDetails(){
       };
     return(
         <article className = "New Snack">
-            <h5>
-                <div>Snack name: {snack.name}</div>
-            </h5>
-            <p>Image: {snack.image}</p>
-            <p>Protein: {snack.protein}</p>
-            <p>Fiber:{snack.fiber}</p>
-            <p>Added_Sugar:{snack.added_sugar}</p>
+          <aside>
+            <h4>the snack health</h4>
+            <HeartHealth snackHealth={snack.is_healthy}/>
+          </aside>
+          <div>
+          <h5>Snack name: {snack.name}</h5>
+            <img src={snack.image} alt={snack.name} />
+            <h6>Protein: {snack.protein}</h6>
+            <h6>Fiber:{snack.fiber}</h6>
+            <h6>Added_Sugar:{snack.added_sugar}</h6>
+          </div>
+            
             <div className="showNavigation">
                 <div>
                 {" "}
-                <Link to={`/snacks/new`}>
+                <Link to={`/snacks`}>
                     <button>Back</button>
                 </Link>
                 </div>
