@@ -18,10 +18,12 @@ function Snacks(){
     }, []);
 
     return(
-        <div>
+        <div className="Snacks">
+            <article>
             {snacks.map((snack) => {
             return <Snack key={snack.id} snack={snack}/>;
             })}
+            </article>
         </div>
     )
 }
