@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Snack({snack}){
     return (
         <article>
@@ -5,7 +7,7 @@ function Snack({snack}){
             </aside>
             <div>
                 <h5>{snack.name}</h5>
-                <img src={snack.image} alt = {snack.name}></img>
+                <img src={snack.image} alt={snack.name}></img>
                 <h6>{snack.protein}</h6>
                 <h6>{snack.fiber}</h6>
                 <h6>{snack.added_sugar}</h6>
@@ -17,6 +19,9 @@ function Snack({snack}){
                 </div>
                 <div>
                     <button>Delete</button>
+                </div>
+                <div>
+                    <Link to={`/snacks/${snack.id}`}>Snack</Link>
                 </div>
             </div>
         </article>
