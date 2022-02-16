@@ -1,5 +1,9 @@
 # Snack-A-Log Pair Programming Lab
 
+## Deployed links
+https://hungry-wescoff-26f552.netlify.app/
+https://hannah-snack-log-be.herokuapp.com/
+
 ## Overview
 
 In this lab activity, you will practice collaborating on a project. You'll be building an app to track snacks and whether or not they are healthy.
